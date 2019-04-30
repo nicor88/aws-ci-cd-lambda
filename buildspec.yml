@@ -19,8 +19,8 @@ phases:
   build:
     commands:
       - echo "the bucket is ${ARTIFACTS_BUCKET}"
-      - env > environment_variables
-      -
+      - env
+
 #      - aws cloudformation package
 #        --template-file infrastructure/stack.yml
 #        --output-template-file packaged_functions.yml
