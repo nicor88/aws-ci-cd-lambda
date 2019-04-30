@@ -107,7 +107,7 @@ Resources:
                 Branch: 'master'
                 Owner: 'nicor88'
                 OAuthToken: '{{resolve:secretsmanager:github_nicor88:SecretString:oauth_token}}'
-                PollForSourceChanges: false
+                PollForSourceChanges: true
               OutputArtifacts:
                 - Name: SourceOutput
 

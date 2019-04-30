@@ -12,3 +12,13 @@ init-pipeline:
         --parameters ParameterKey=Service,ParameterValue=${SERVICE_NAME} \
         --tags Key=Service,Value=${SERVICE_NAME} \
         --capabilities CAPABILITY_IAM
+
+update-pipeline:
+	@echo "Updating stack"
+	@aws cloudformation update-stack \
+        --region ${REGION} \
+        --stack-name ${STACK_NAME} \
+        --template-body file://infrastructure/pipeline.yml \
+        --parameters ParameterKey=Service,ParameterValue=${SERVICE_NAME} \
+        --tags Key=Service,Value=${SERVICE_NAME} \
+        --capabilities CAPABILITY_IAM
