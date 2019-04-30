@@ -65,8 +65,7 @@ Resources:
     Type: AWS::CodeBuild::Project
     Properties:
       Artifacts:
-        Type: S3
-        Location: !Sub '${ArtifactsBucket}'
+        Type: CODEPIPELINE
       Cache:
         Location: !Sub '${ArtifactsBucket}/${Service}-pipeline/cache'
         Type: S3
@@ -83,7 +82,7 @@ Resources:
       Source:
         BuildSpec: buildspec.yml
         Type: CODEPIPELINE
-      TimeoutInMinutes: 15
+      TimeoutInMinutes: 5
 
 
   CodePipeline:
