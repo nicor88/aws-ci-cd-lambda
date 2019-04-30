@@ -154,7 +154,7 @@ Resources:
                 Owner: AWS
                 Provider: S3
                 Version: '1'
-
+                BucketName: '${ArtifactsBucket}'
               InputArtifacts:
                 - Name: BuildOutput
               RunOrder: 1
