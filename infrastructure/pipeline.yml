@@ -65,7 +65,7 @@ Resources:
     Type: AWS::CodeBuild::Project
     Properties:
       Artifacts:
-        Type: CODEPIPELINE
+        Type: S3
       Cache:
         Location: !Sub '${ArtifactsBucket}/${Service}-pipeline/cache'
         Type: S3
@@ -83,6 +83,7 @@ Resources:
         BuildSpec: buildspec.yml
         Type: CODEPIPELINE
       TimeoutInMinutes: 15
+
 
   CodePipeline:
     Type: AWS::CodePipeline::Pipeline
@@ -144,3 +145,16 @@ Resources:
                 - Name: SourceOutput
               OutputArtifacts:
                 - Name: BuildOutput
+
+        - Name: UploadToS3
+          Actions:
+            - Name: UploadToS3
+              ActionTypeId:
+                Category: Deploy
+                Owner: AWS
+                Provider: S3
+                Version: '1'
+
+              InputArtifacts:
+                - Name: BuildOutput
+              RunOrder: 1

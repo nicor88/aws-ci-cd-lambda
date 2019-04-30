@@ -19,7 +19,7 @@ phases:
   build:
     commands:
       # only for debugging reaosn
-      - env
+      - env > environment
       - echo "the bucket is ${ARTIFACTS_BUCKET}"
       - bash scripts/build_lambdas.sh
 
