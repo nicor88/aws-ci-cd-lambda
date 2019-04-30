@@ -18,8 +18,10 @@ phases:
 
   build:
     commands:
-      - echo "the bucket is ${ARTIFACTS_BUCKET}"
+      # only for debugging reaosn
       - env
+      - echo "the bucket is ${ARTIFACTS_BUCKET}"
+      - bash scripts/build_lambdas.sh
 
 #      - aws cloudformation package
 #        --template-file infrastructure/stack.yml
@@ -28,7 +30,8 @@ phases:
 
 artifacts:
   files:
-    - environment_variables
+    - lambdas/.build/hello_world.zip
+    - lambdas/.build/hello_world_2.zip
 
 cache:
   paths:

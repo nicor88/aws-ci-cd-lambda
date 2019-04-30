@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+set -e
+
+ROOT_DIR=${PWD}
+BASE_LAMBDAS_DIR=lambdas
+BASE_LAMBDA_SRC=src
+
+
+cd ${BASE_LAMBDAS_DIR}
+
+rm -rf .build
+mkdir .build
+
+for LAMBDA_NAME in *; do
+    echo "Building ${LAMBDA_NAME}";
+
+    LAMBDA_SRC_PATH=${LAMBDA_NAME}/${BASE_LAMBDA_SRC}
+
+    rm -rf ${LAMBDA_NAME}/.build
+    mkdir -p ${LAMBDA_NAME}/.build
+    cp ${LAMBDA_SRC_PATH}/*.py ${LAMBDA_NAME}/.build
+    python -m pip --isolated install -t ${LAMBDA_NAME}/.build -r ${LAMBDA_NAME}/requirements.txt
+    cd ${LAMBDA_NAME}/.build
+    zip -r ${LAMBDA_NAME}.zip .
+    pwd
+    mv ${LAMBDA_NAME}.zip ${ROOT_DIR}/${BASE_LAMBDAS_DIR}/.build/
+    rm -rf ${LAMBDA_NAME}/.build/
+    cd ${ROOT_DIR}/${BASE_LAMBDAS_DIR}
+done

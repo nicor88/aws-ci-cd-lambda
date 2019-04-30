@@ -67,7 +67,7 @@ Resources:
       Artifacts:
         Type: CODEPIPELINE
       Cache:
-        Location: !Sub '${ArtifactsBucket}/buildcache/functions'
+        Location: !Sub '${ArtifactsBucket}/${Service}-pipeline/cache'
         Type: S3
       Description: 'Build functions'
       Environment:
@@ -132,7 +132,7 @@ Resources:
 
         - Name: Build
           Actions:
-            - Name: Functions
+            - Name: BuildLambdaFunctions
               ActionTypeId:
                 Category: Build
                 Owner: AWS
