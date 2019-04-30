@@ -32,6 +32,7 @@ artifacts:
   files:
     - lambdas/.build/hello_world.zip
     - lambdas/.build/hello_world_2.zip
+  name: $(AWS_REGION)-$(date +%Y-%m-%d)
 
 cache:
   paths:
