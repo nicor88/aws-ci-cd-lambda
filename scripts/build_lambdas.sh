@@ -23,8 +23,9 @@ for LAMBDA_NAME in *; do
     python -m pip --isolated install -t ${LAMBDA_NAME}/.build -r ${LAMBDA_NAME}/requirements.txt
     cd ${LAMBDA_NAME}/.build
     zip -r ${LAMBDA_NAME}.zip .
-    pwd
     mv ${LAMBDA_NAME}.zip ${ROOT_DIR}/${BASE_LAMBDAS_DIR}/.build/
-    rm -rf ${LAMBDA_NAME}/.build/
+    cd ..
+    rm -rf .build
     cd ${ROOT_DIR}/${BASE_LAMBDAS_DIR}
+
 done
