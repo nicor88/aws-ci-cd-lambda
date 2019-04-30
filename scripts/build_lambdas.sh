@@ -7,10 +7,10 @@ BASE_LAMBDAS_DIR=lambdas
 BASE_LAMBDA_SRC=src
 
 
-cd ${BASE_LAMBDAS_DIR}
+rm -rf build
+mkdir build
 
-rm -rf .build
-mkdir .build
+cd ${BASE_LAMBDAS_DIR}
 
 for LAMBDA_NAME in *; do
     echo "Building ${LAMBDA_NAME}";
@@ -23,7 +23,7 @@ for LAMBDA_NAME in *; do
     python -m pip --isolated install -t ${LAMBDA_NAME}/.build -r ${LAMBDA_NAME}/requirements.txt
     cd ${LAMBDA_NAME}/.build
     zip -r ${LAMBDA_NAME}.zip .
-    mv ${LAMBDA_NAME}.zip ${ROOT_DIR}/${BASE_LAMBDAS_DIR}/.build/
+    mv ${LAMBDA_NAME}.zip ${ROOT_DIR}/build/
     cd ..
     rm -rf .build
     cd ${ROOT_DIR}/${BASE_LAMBDAS_DIR}
