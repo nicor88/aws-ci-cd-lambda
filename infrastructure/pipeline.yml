@@ -66,6 +66,7 @@ Resources:
     Properties:
       Artifacts:
         Type: S3
+        Location: !Sub '${ArtifactsBucket}/${Service}/artifacts'
       Cache:
         Location: !Sub '${ArtifactsBucket}/${Service}-pipeline/cache'
         Type: S3
