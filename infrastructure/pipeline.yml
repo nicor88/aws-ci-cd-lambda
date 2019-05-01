@@ -64,6 +64,7 @@ Resources:
   CodeBuildProject:
     Type: AWS::CodeBuild::Project
     Properties:
+      Name: !Sub '${Service}-lambdas-builder'
       Artifacts:
         Type: CODEPIPELINE
       Cache:
