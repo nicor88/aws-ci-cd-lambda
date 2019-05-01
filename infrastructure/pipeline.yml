@@ -154,9 +154,9 @@ Resources:
                 Owner: AWS
                 Provider: S3
                 Version: '1'
-              Configuration:
-                BucketName: '${ArtifactsBucket}'
-                Extract: 'true'
               InputArtifacts:
                 - Name: BuildOutput
+              Configuration:
+                BucketName: !Sub '${ArtifactsBucket}'
+                Extract: 'true'
               RunOrder: 1
