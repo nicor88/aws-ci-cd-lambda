@@ -55,6 +55,7 @@ Resources:
       CodeUri: '../lambdas/hello_world/.build'
       FunctionName: !Sub '${Service}-hello-world'
       Role: !GetAtt HelloWorldLambdaExecutionRole.Arn
+      MemorySize: 256
 
   HelloWorld2:
     Type: AWS::Serverless::Function
