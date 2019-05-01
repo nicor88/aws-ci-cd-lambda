@@ -18,10 +18,10 @@ package-cfn-stack: build-lambdas
 	@aws cloudformation package --template-file infrastructure/stack.yml \
 	--output-template-file packaged_functions.yml --s3-bucket hello-world-us-east-1-artifacts
 
-deploy-stack:
+deploy-stack-locally:
 	@aws cloudformation deploy \
         --region ${REGION} \
-        --stack-name ${SERVICE_NAME} \
+        --stack-name ${SERVICE_NAME}-functions \
         --template-file packaged_functions.yml \
         --parameter-overrides Service=${SERVICE_NAME} \
         --tags Service=${SERVICE_NAME} \
