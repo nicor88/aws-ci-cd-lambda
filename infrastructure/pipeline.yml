@@ -1,6 +1,6 @@
 ---
 AWSTemplateFormatVersion: '2010-09-09'
-Description: CD pipeline
+Description: CI/CD pipeline
 
 Parameters:
   Service:
@@ -146,17 +146,36 @@ Resources:
               OutputArtifacts:
                 - Name: BuildOutput
 
-        - Name: UploadToS3
+        - Name: Deploy
           Actions:
-            - Name: UploadToS3
+            - Name: DeployFunctionsStack
               ActionTypeId:
                 Category: Deploy
                 Owner: AWS
-                Provider: S3
+                Provider: CloudFormation
                 Version: '1'
+              Configuration:
+                ActionMode: CREATE_UPDATE
+                Capabilities: CAPABILITY_IAM,CAPABILITY_AUTO_EXPAND
+                RoleArn: !GetAtt CloudformationRole.Arn
+                StackName: !Sub '${Service}-functions'
+                TemplatePath: BuildOutput::packaged_functions.yml
+                ParameterOverrides: !Sub '{"Service": "${Service}"}'
               InputArtifacts:
                 - Name: BuildOutput
-              Configuration:
-                BucketName: !Sub '${ArtifactsBucket}'
-                Extract: 'true'
               RunOrder: 1
+
+#        - Name: UploadToS3
+#          Actions:
+#            - Name: UploadToS3
+#              ActionTypeId:
+#                Category: Deploy
+#                Owner: AWS
+#                Provider: S3
+#                Version: '1'
+#              InputArtifacts:
+#                - Name: BuildOutput
+#              Configuration:
+#                BucketName: !Sub '${ArtifactsBucket}'
+#                Extract: 'true'
+#              RunOrder: 1

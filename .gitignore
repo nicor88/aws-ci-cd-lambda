@@ -108,3 +108,5 @@ venv.bak/
 
 # Artifacts
 lambdas/.build/
+lambdas/*/.build
+packaged_functions.yml

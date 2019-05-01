@@ -18,19 +18,16 @@ phases:
 
   build:
     commands:
-      # only for debugging reaosn
-      - env > environment
       - echo "the bucket is ${ARTIFACTS_BUCKET}"
       - bash scripts/build_lambdas.sh
-
-#      - aws cloudformation package
-#        --template-file infrastructure/stack.yml
-#        --output-template-file packaged_functions.yml
-#        --s3-bucket "${ARTIFACTS_BUCKET}"
+      - aws cloudformation package
+        --template-file infrastructure/stack.yml
+        --output-template-file packaged_functions.yml
+        --s3-bucket "${ARTIFACTS_BUCKET}"
 
 artifacts:
   files:
-    - '**/*'
+    - 'packaged_functions.yml'
 
 cache:
   paths:

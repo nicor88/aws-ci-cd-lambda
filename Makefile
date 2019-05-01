@@ -1,24 +1,28 @@
-SERVICE_NAME=hello-world
-STACK_NAME=hello-world-pipeline
+SERVICE_NAME=my-service
+STACK_NAME_PIPELINE=my-service-ci-cd
 REGION=us-east-1
 
-
-init-pipeline:
-	@echo "Creating stack"
-	@aws cloudformation create-stack \
+deploy-pipeline:
+	@aws cloudformation deploy \
         --region ${REGION} \
-        --stack-name ${STACK_NAME} \
-        --template-body file://infrastructure/pipeline.yml \
-        --parameters ParameterKey=Service,ParameterValue=${SERVICE_NAME} \
-        --tags Key=Service,Value=${SERVICE_NAME} \
+        --stack-name ${STACK_NAME_PIPELINE} \
+        --template-file infrastructure/pipeline.yml \
+        --parameter-overrides Service=${SERVICE_NAME} \
+        --tags Service=${SERVICE_NAME} \
         --capabilities CAPABILITY_IAM
 
-update-pipeline:
-	@echo "Updating stack"
-	@aws cloudformation update-stack \
+build-lambdas:
+	bash scripts/build_lambdas.sh
+
+package-cfn-stack: build-lambdas
+	@aws cloudformation package --template-file infrastructure/stack.yml \
+	--output-template-file packaged_functions.yml --s3-bucket hello-world-us-east-1-artifacts
+
+deploy-stack:
+	@aws cloudformation deploy \
         --region ${REGION} \
-        --stack-name ${STACK_NAME} \
-        --template-body file://infrastructure/pipeline.yml \
-        --parameters ParameterKey=Service,ParameterValue=${SERVICE_NAME} \
-        --tags Key=Service,Value=${SERVICE_NAME} \
+        --stack-name ${SERVICE_NAME} \
+        --template-file packaged_functions.yml \
+        --parameter-overrides Service=${SERVICE_NAME} \
+        --tags Service=${SERVICE_NAME} \
         --capabilities CAPABILITY_IAM

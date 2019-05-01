@@ -1,0 +1,28 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Parameters:
+  Service:
+    Description: Name of the service, propagated all over the place. Choose wisely.
+    Type: String
+    AllowedPattern: '^[a-z]+(-[a-z]+)*$'
+    ConstraintDescription: must contain only lowercase letters and hyphens
+
+Globals:
+  Function:
+    Environment:
+      Variables:
+        SERVICE: !Ref Service
+        STACK: !Ref AWS::StackName
+    Handler: lambda_function.lambda_handler
+    MemorySize: 128
+    Runtime: python3.7
+    Timeout: 30
+
+Resources:
+  HelloWorld:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: '../lambdas/hello_world/.build'
+      FunctionName: !Sub '${Service}-hello-world'

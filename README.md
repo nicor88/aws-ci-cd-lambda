@@ -4,5 +4,5 @@ CI/CD for lambda function with Code Pipeline
 ## Init
 <pre>
 export AWS_PROFILE=nicor88
-make init-pipeline
+make deploy-pipeline
 </pre>

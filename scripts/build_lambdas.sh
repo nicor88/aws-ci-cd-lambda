@@ -22,10 +22,10 @@ for LAMBDA_NAME in *; do
     cp ${LAMBDA_SRC_PATH}/*.py ${LAMBDA_NAME}/.build
     python -m pip --isolated install -t ${LAMBDA_NAME}/.build -r ${LAMBDA_NAME}/requirements.txt
     cd ${LAMBDA_NAME}/.build
-    zip -r ${LAMBDA_NAME}.zip .
-    mv ${LAMBDA_NAME}.zip ${ROOT_DIR}/build/
+    #zip -r ${LAMBDA_NAME}.zip .
+    #mv ${LAMBDA_NAME}.zip ${ROOT_DIR}/build/
     cd ..
-    rm -rf .build
+    #rm -rf .build
     cd ${ROOT_DIR}/${BASE_LAMBDAS_DIR}
 
 done
