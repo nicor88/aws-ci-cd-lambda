@@ -156,6 +156,7 @@ Resources:
                 Version: '1'
               Configuration:
                 BucketName: '${ArtifactsBucket}'
+                Extract: 'true'
               InputArtifacts:
                 - Name: BuildOutput
               RunOrder: 1
