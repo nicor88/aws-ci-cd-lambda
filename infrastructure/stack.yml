@@ -18,11 +18,47 @@ Globals:
     Handler: lambda_function.lambda_handler
     MemorySize: 128
     Runtime: python3.7
-    Timeout: 30
+    Timeout: 10
 
 Resources:
+
+  HelloWorldLambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: "/"
+      Policies:
+        - PolicyName: root
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:*
+                Resource: arn:aws:logs:*:*:*
+              - Effect: Allow
+                Action:
+                  - s3:*
+                Resource: '*'
+
   HelloWorld:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: '../lambdas/hello_world/.build'
       FunctionName: !Sub '${Service}-hello-world'
+      Role: !GetAtt HelloWorldLambdaExecutionRole.Arn
+
+  HelloWorld2:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: '../lambdas/hello_world_2/.build'
+      FunctionName: !Sub '${Service}-hello-world_2'
+      Role: !GetAtt HelloWorldLambdaExecutionRole.Arn

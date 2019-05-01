@@ -16,7 +16,7 @@ build-lambdas:
 
 package-cfn-stack: build-lambdas
 	@aws cloudformation package --template-file infrastructure/stack.yml \
-	--output-template-file packaged_functions.yml --s3-bucket hello-world-us-east-1-artifacts
+	--output-template-file packaged_functions.yml --s3-bucket ${SERVICE_NAME}-us-east-1-artifacts
 
 deploy-stack-locally:
 	@aws cloudformation deploy \
