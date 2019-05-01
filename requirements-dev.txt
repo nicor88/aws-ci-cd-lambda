@@ -1,1 +1,2 @@
 cfn-lint==0.19.1
+pytest==4.4.1
